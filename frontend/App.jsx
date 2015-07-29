@@ -2,8 +2,8 @@
 /*global React*/
 
 var React = require('react');
-var Test = require('./Test.jsx');
+var ScrollContainer = require('./ScrollContainer.jsx');
 
-var App = React.render( <Test/>, $('#container')[0]);
+var App = React.render( <ScrollContainer/>, $('#container')[0]);
 
 module.exports = App;
