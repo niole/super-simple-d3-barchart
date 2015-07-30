@@ -4,16 +4,18 @@
 //var ScrollMixin = require('./scrollmixin');
 var React = require('react');
 var ScrollData = require('./ScrollData');
+var NavBar = require('./NavBar.jsx');
 
 var ScrollContainer = React.createClass({
     getInitialState: function() {
       this.scrollvis = new ScrollData(600,600);
 
-        return {
-                scrolling: false,
-                vis: null,
-                n: 0
-                };
+      return {
+              scrolling: false,
+              bars: -1,
+              colors: -1,
+              vis: null
+              };
     },
     componentDidMount: function(){
       $('#scroll').bind('mousewheel', function(event){
@@ -23,7 +25,6 @@ var ScrollContainer = React.createClass({
       this.CheckInterval = 100;
       this.checkInterval = setInterval(this.checkScroll, this.CheckInterval);
       this.scrolling = false;
-      this.vis = undefined;
 
     },
    componentWillUnmount: function() {
@@ -45,53 +46,49 @@ var ScrollContainer = React.createClass({
         this.onScrollStart();
     }
     this.lastScrollTime = Date.now();
+    if (this.state.bars > 0){
+      this.scrollvis.add_data(event.originalEvent.wheelDelta);
 
-    this.scrollvis.add_data(event.originalEvent.wheelDelta);
-
-    if (this.scrollvis.dps.length > this.scrollvis.oldLength){
-      this.scrollvis.oldLength += 1;
-      this.scrollvis.add_bar();
-      this.vis = this.scrollvis.make_ship_container();
-      this.setState({
-        n: this.scrollvis.dps.length,
-        vis: this.vis});
-    }
-
-    },
-    onScrollStart: function() {
-        this.setState({scrolling: true});
-    },
-    onScrollEnd: function() {
-        this.setState({scrolling: false});
-    },
-    render: function() {
-
-      var color;
-      if (this.state.scrolling){
-        color = "green";
-      }else{
-        color = "red";
+      if (this.scrollvis.dps.length > this.scrollvis.oldLength){
+        this.scrollvis.oldLength += 1;
+        this.scrollvis.add_bar();
+        this.setState({vis: this.scrollvis.make_ship_container()});
       }
-      return (
-        React.createElement('div',{},
-          React.createElement('div', {
-                                      id: "scroll",
-                                      className: "target-container"
-                                    },
-            React.createElement('div',{
-                                      className: "target",
-                                      style: {
-                                        backgroundColor: color
-                                             }
-                                      }
-                                )
-                              ),
-                              this.state.vis,
-  React.createElement('h1',{},this.state.n)
-                            )
-
-            );
     }
+
+  },
+  onScrollStart: function() {
+      this.setState({scrolling: true});
+  },
+  onScrollEnd: function() {
+      this.setState({scrolling: false});
+  },
+  barsEvent: function(n){
+    this.setState({bars: this.state.bars*n});
+  },
+  colorsEvent: function(n){
+    this.setState({colors: this.state.colors*n});
+  },
+  render: function() {
+
+    var color;
+    if (this.state.scrolling){
+      color = "green";
+    }else{
+      color = "red";
+    }
+    return (
+      <div className="app-container">
+        <NavBar bars={this.barsEvent} colors={this.colorsEvent}/>
+        <div className="page">
+          <div id="scroll" className="target-container">
+            <div className="target" style={{"backgroundColor":color}}/>
+          </div>
+          {this.state.vis}
+        </div>
+      </div>
+          );
+  }
 });
 
 module.exports = ScrollContainer;

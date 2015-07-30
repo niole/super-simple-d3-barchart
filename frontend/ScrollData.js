@@ -33,6 +33,9 @@ ScrollVis.prototype.add_data = function(d){
 };
 
 ScrollVis.prototype.add_bar = function(){
+  /**
+   * builds individual vis parts
+   */
       var value = this.dps[this.dps.length-1];
       var heightBar = (Math.abs(value)*this.maxH)/this.maxB;
       if (value < 0){
@@ -112,7 +115,11 @@ ScrollVis.prototype.add_bar = function(){
 };
 
 ScrollVis.prototype.make_ship_container = function(){
-  //TODO : add up the two divs that make up bigger div
+  /*
+  *puts top and bottom div collections inside of a container
+  *that allows for scrolling vis to scroll
+ */
+
   return ( React.createElement('div',{
                             className: "container",
                             style: {
