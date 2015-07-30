@@ -43,7 +43,7 @@ ScrollVis.prototype.add_bar = function(){
           React.createElement('div',{
                                     className: "white-space",
                                     style:{
-                                      backgroundColor: "white",
+                                      backgroundColor: "#eee",
                                       position: "relative",
                                       width: this.barW,
                                       height: this.maxH,
@@ -55,7 +55,8 @@ ScrollVis.prototype.add_bar = function(){
                                       style: {
                                         height: heightBar,
                                         width: this.barW,
-                                        backgroundColor: "blue",
+                                        backgroundColor: "white",
+                                        border: "1px solid grey",
                                         position: "absolute",
                                         top: "0px"
                                       }
@@ -67,7 +68,7 @@ ScrollVis.prototype.add_bar = function(){
           React.createElement('div',{
                                     className: "white-space",
                                     style:{
-                                      backgroundColor: "white",
+                                      backgroundColor: "#eee",
                                       width: this.barW,
                                       height: this.maxH,
                                       float: "right"
@@ -79,7 +80,7 @@ ScrollVis.prototype.add_bar = function(){
           React.createElement('div',{
                                     className: "white-space",
                                     style:{
-                                      backgroundColor: "white",
+                                      backgroundColor: "#eee",
                                       width: this.barW,
                                       height: this.maxH,
                                       float: "right"
@@ -91,7 +92,7 @@ ScrollVis.prototype.add_bar = function(){
           React.createElement('div',{
                                     className: "white-space",
                                     style:{
-                                      backgroundColor: "white",
+                                      backgroundColor: "#eee",
                                       position: "relative",
                                       width: this.barW,
                                       height: this.maxH,
@@ -103,7 +104,8 @@ ScrollVis.prototype.add_bar = function(){
                                       style: {
                                         height: heightBar,
                                         width: this.barW,
-                                        backgroundColor: "blue",
+                                        backgroundColor: "white",
+                                        border: "1px solid grey",
                                         position: "absolute",
                                         bottom: "0px",
                                       }
