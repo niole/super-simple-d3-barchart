@@ -11,7 +11,8 @@ var ScrollContainer = React.createClass({
 
         return {
                 scrolling: false,
-                vis: null
+                vis: null,
+                n: 0
                 };
     },
     componentDidMount: function(){
@@ -45,13 +46,15 @@ var ScrollContainer = React.createClass({
     }
     this.lastScrollTime = Date.now();
 
-    this.scrollvis.update_data(event.originalEvent.wheelDelta);
+    this.scrollvis.add_data(event.originalEvent.wheelDelta);
 
     if (this.scrollvis.dps.length > this.scrollvis.oldLength){
       this.scrollvis.oldLength += 1;
       this.scrollvis.add_bar();
       this.vis = this.scrollvis.make_ship_container();
-      this.setState({vis: this.vis});
+      this.setState({
+        n: this.scrollvis.dps.length,
+        vis: this.vis});
     }
 
     },
@@ -83,7 +86,8 @@ var ScrollContainer = React.createClass({
                                       }
                                 )
                               ),
-                              this.state.vis
+                              this.state.vis,
+  React.createElement('h1',{},this.state.n)
                             )
 
             );

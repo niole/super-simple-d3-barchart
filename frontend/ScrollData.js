@@ -8,16 +8,27 @@ function ScrollVis(height,width){
   this.width = width;
   this.topBars = [];
   this.bottomBars = [];
-  this.maxH = this.height/2;
-  this.maxB = 250;
+  this.maxH = Math.floor(this.height/2);
+  this.maxB = 1300;
   this.barW = this.width/25;
+  this.numDivs = 25;
+  this.startPos = 0;
 }
 
-ScrollVis.prototype.update_data = function(d){
+ScrollVis.prototype.add_data = function(d){
   //when this.data's value changes, update whole vis
-  this.dps.push(d);
-  if (this.maxB < d){
-    this.maxB = d;
+  //get rid of first element in topBars and bottomBars if
+  //number of data points exceeds what the vis can hold
+  if (this.dps.length >= this.numDivs){
+    this.startPos += 1;
+    this.topBars.shift();
+    this.bottomBars.shift();
+  }
+
+  if (this.maxB < Math.abs(d)){
+    this.dps.push(this.maxB);
+  }else{
+    this.dps.push(d);
   }
 };
 
@@ -105,10 +116,18 @@ ScrollVis.prototype.make_ship_container = function(){
   return ( React.createElement('div',{
                             className: "container",
                             style: {
-                              width: this.width,
+                              width: "100%",
                               height: this.height,
+                            }
+                            },
+  React.createElement('div',{
+                            className: "vis-wrapper",
+                            style: {
+                              height: "100%",
+                              width: this.width,
                               position: "relative",
-                              overflowX: "hidden"
+                              overflow: "hidden",
+                              whiteSpace: "nowrap"
                             }
                             },
   React.createElement('div',{
@@ -116,7 +135,9 @@ ScrollVis.prototype.make_ship_container = function(){
                             style: {
                               top: "0px",
                               position: "absolute",
-                              borderBottom: "1px solid black"
+                              borderBottom: "1px solid black",
+                              display: "inline-block",
+                              overflow: "hidden",
                             }
   },this.topBars ),
   React.createElement('div',{
@@ -124,9 +145,13 @@ ScrollVis.prototype.make_ship_container = function(){
                             style: {
                               position: "absolute",
                               bottom: "0px",
-                              borderTop: "1px solid black"
+                              borderTop: "1px solid black",
+                              display: "inline-block",
+                              overflow: "hidden"
+
                             }
   },this.bottomBars)
+                     )
                      )
          );
 };
