@@ -1,4 +1,9 @@
+body {
+  background-color: #222;
+}
+
 span {
+  margin-left: 13px;
   display: table-cell;
   vertical-align: middle;
   line-height: normal;
@@ -8,20 +13,25 @@ span {
   color: #FFF9C5;
 }
 
-body {
-  background-color: #333;
+#color-link:hover {
+  background-color: #e18728;
 }
 
 #scroll-link:hover {
   background-color: #9351A6;
 }
 
-#color-link:hover {
-  background-color: #e18728;
+#scroll-text {
+  position: absolute;
 }
 
 .app-container {
   background-color: #222;
+}
+
+.app-header {
+  font-size: 100px;
+  color: white;
 }
 
 .nav-button {
@@ -34,31 +44,23 @@ body {
   background-color: #333;
 }
 
-.nav-button:active {
-  background-color: brown;
-  height: 100%;
-  width: 15%;
-
-}
-
 .page {
   background-color: #333;
   width: 90%;
-  margin: 10px 0px 0px 10px;
+  margin: 10px 0px 0px 0px;
 }
 
 
 .scroll-nav {
-  width: 100%;
+  width: 90%;
   height: 75px;
   background-color: #333;
-
 }
 
 .target {
   width: 100px;
   height: 100px;
-  overflow: hidden;
+  position: relative;
 }
 
 .target-container {
@@ -67,4 +69,10 @@ body {
   height: 100px;
   border-radius: 60px;
   margin: 5px 0px 15px 0px;
+}
+
+.vis-backdrop {
+  width: 600px;
+  height: 400px;
+  background-color: #eee;
 }

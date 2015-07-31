@@ -1,7 +1,9 @@
 "use strict";
 var React = require('react');
+var colors = require('./Colors.js');
 
 function ScrollVis(height,width){
+  this.color_state = false;
   this.dps = [];
   this.oldLength = 0;
   this.height = height;
@@ -10,10 +12,15 @@ function ScrollVis(height,width){
   this.bottomBars = [];
   this.maxH = Math.floor(this.height/2);
   this.maxB = 1300;
+  this.color_unit = this.maxB/21;
   this.barW = this.width/25;
-  this.numDivs = 25;
   this.startPos = 0;
+  this.numDivs = 25;
 }
+
+ScrollVis.prototype.update_color_state = function(){
+  this.color_state = !this.color_state;
+};
 
 ScrollVis.prototype.add_data = function(d){
   //when this.data's value changes, update whole vis
@@ -36,84 +43,89 @@ ScrollVis.prototype.add_bar = function(){
   /**
    * builds individual vis parts
    */
-      var value = this.dps[this.dps.length-1];
-      var heightBar = (Math.abs(value)*this.maxH)/this.maxB;
-      if (value < 0){
-        this.bottomBars.push(
-          React.createElement('div',{
-                                    className: "white-space",
-                                    style:{
-                                      backgroundColor: "#eee",
-                                      position: "relative",
-                                      width: this.barW,
-                                      height: this.maxH,
-                                      float: "right"
-                                    }
-                                    },
-            React.createElement('div',{
-                                      className: "bar",
-                                      style: {
-                                        height: heightBar,
-                                        width: this.barW,
-                                        backgroundColor: "white",
-                                        border: "1px solid grey",
-                                        position: "absolute",
-                                        top: "0px"
-                                      }
-                                      })
-                             )
+  var color = "white";
+  var value = this.dps[this.dps.length-1];
+  var heightBar = (Math.abs(value)*this.maxH)/this.maxB;
 
-        );
-        this.topBars.push(
-          React.createElement('div',{
-                                    className: "white-space",
-                                    style:{
-                                      backgroundColor: "#eee",
-                                      width: this.barW,
-                                      height: this.maxH,
-                                      float: "right"
-                                    }})
-        );
+  if (this.color_state === true){
+    color = colors[Math.floor(Math.abs(value)/this.color_unit)];
+  }
+  if (value < 0){
+    this.bottomBars.push(
+      React.createElement('div',{
+                                className: "white-space",
+                                style:{
+                                  backgroundColor: "#eee",
+                                  position: "relative",
+                                  width: this.barW,
+                                  height: this.maxH,
+                                  float: "right"
+                                }
+                                },
+        React.createElement('div',{
+                                  className: "bar",
+                                  style: {
+                                    height: heightBar,
+                                    width: this.barW,
+                                    backgroundColor: color,
+                                    border: "1px solid grey",
+                                    position: "absolute",
+                                    top: "0px"
+                                  }
+                                  })
+                         )
 
-      }else{
-        this.bottomBars.push(
-          React.createElement('div',{
-                                    className: "white-space",
-                                    style:{
-                                      backgroundColor: "#eee",
-                                      width: this.barW,
-                                      height: this.maxH,
-                                      float: "right"
-                                    }})
+    );
+    this.topBars.push(
+      React.createElement('div',{
+                                className: "white-space",
+                                style:{
+                                  backgroundColor: "#eee",
+                                  width: this.barW,
+                                  height: this.maxH,
+                                  float: "right"
+                                }})
+    );
 
-        );
+  }else{
+    this.bottomBars.push(
+      React.createElement('div',{
+                                className: "white-space",
+                                style:{
+                                  backgroundColor: "#eee",
+                                  width: this.barW,
+                                  height: this.maxH,
+                                  float: "right"
+                                }})
 
-        this.topBars.push(
-          React.createElement('div',{
-                                    className: "white-space",
-                                    style:{
-                                      backgroundColor: "#eee",
-                                      position: "relative",
-                                      width: this.barW,
-                                      height: this.maxH,
-                                      float: "right"
-                                    }
-                                    },
-            React.createElement('div',{
-                                      className: "bar",
-                                      style: {
-                                        height: heightBar,
-                                        width: this.barW,
-                                        backgroundColor: "white",
-                                        border: "1px solid grey",
-                                        position: "absolute",
-                                        bottom: "0px",
-                                      }
-                                      })
-                             )
+    );
 
-        );
-      }
+    this.topBars.push(
+      React.createElement('div',{
+                                className: "white-space",
+                                style:{
+                                  backgroundColor: "#eee",
+                                  position: "relative",
+                                  width: this.barW,
+                                  height: this.maxH,
+                                  float: "right"
+                                }
+                                },
+        React.createElement('div',{
+                                  className: "bar",
+                                  style: {
+                                    height: heightBar,
+                                    width: this.barW,
+                                    backgroundColor: color,
+                                    border: "1px solid grey",
+                                    position: "absolute",
+                                    bottom: "0px",
+                                  }
+                                  })
+                         )
+
+    );
+  }
 };
 
 ScrollVis.prototype.make_ship_container = function(){

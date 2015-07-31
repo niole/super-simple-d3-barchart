@@ -7,17 +7,20 @@ var ScrollData = require('./ScrollData');
 var NavBar = require('./NavBar.jsx');
 
 var ScrollContainer = React.createClass({
+
     getInitialState: function() {
-      this.scrollvis = new ScrollData(600,600);
+      this.scrollvis = new ScrollData(400,600);
 
       return {
               scrolling: false,
               bars: -1,
               colors: -1,
-              vis: null
+              vis: null,
+              n: 35
               };
     },
     componentDidMount: function(){
+
       $('#scroll').bind('mousewheel', function(event){
         this.onScroll(event);
        }.bind(this));
@@ -47,12 +50,16 @@ var ScrollContainer = React.createClass({
     }
     this.lastScrollTime = Date.now();
     if (this.state.bars > 0){
-      this.scrollvis.add_data(event.originalEvent.wheelDelta);
+      var n = event.originalEvent.wheelDelta;
+      this.scrollvis.add_data(n);
 
       if (this.scrollvis.dps.length > this.scrollvis.oldLength){
         this.scrollvis.oldLength += 1;
         this.scrollvis.add_bar();
-        this.setState({vis: this.scrollvis.make_ship_container()});
+        this.setState({
+                      vis: this.scrollvis.make_ship_container(),
+                      n: (this.state.n+20)%100
+                      });
       }
     }
 
@@ -67,6 +74,7 @@ var ScrollContainer = React.createClass({
     this.setState({bars: this.state.bars*n});
   },
   colorsEvent: function(n){
+    this.scrollvis.update_color_state();
     this.setState({colors: this.state.colors*n});
   },
   render: function() {
@@ -79,12 +87,17 @@ var ScrollContainer = React.createClass({
     }
     return (
       <div className="app-container">
+        <span className="app-header">Text</span>
         <NavBar bars={this.barsEvent} colors={this.colorsEvent}/>
         <div className="page">
           <div id="scroll" className="target-container">
-            <div className="target" style={{"backgroundColor":color}}/>
+            <div className="target" style={{"backgroundColor":color}}>
+              <span id="scroll-text" style={{"top":this.state.n}}>scroll</span>
+            </div>
           </div>
-          {this.state.vis}
+          <div className="vis-backdrop">
+            {this.state.vis}
+          </div>
         </div>
       </div>
           );
