@@ -3,15 +3,20 @@
 
 var React = require('react');
 var NavElt = require('./NavElt.jsx');
+var fakeData = require('./fakeData.js');
 
 var ThemeX = React.createClass({
+  getDefaultProps: function(){
+    return {
+      nav_elt_data: fakeData
+    };
+  },
   propTypes: {
     nav_elt_data: React.PropTypes.array
   },
   render: function(){
     var nav_elts = this.props.nav_elt_data.map(function(d){
       return <NavElt
-              title={d.title}
               data={d.data}
               />;
     });

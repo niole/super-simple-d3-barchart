@@ -1,9 +1,7 @@
 "use strict";
 
 var React = require('react');
-var ScrollContainer = require('./ScrollContainer.jsx');
-var Dash = require('./Dash.jsx');
+var ScrollContainer = require('./Scroll/ScrollContainer.jsx');
 
-var App = React.render( <ScrollContainer/>, $('#container')[0]);
+React.render( <ScrollContainer/>, $('#container')[0]);
 
-module.exports = App;

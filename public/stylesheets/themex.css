@@ -1,3 +1,9 @@
+body {
+  background-color: white;
+  font-family: 'Gotham A', 'Gotham B', sans-serif;
+  word-spacing: normal;
+}
+
 .themex-nav {
   padding-right: 20px;
   float: right;
@@ -14,6 +20,8 @@
     border: 0;
     margin: 0;
     padding: 0;
+    list-style: none;
+    display: block;
 }
 
 .themex-nav-header {
