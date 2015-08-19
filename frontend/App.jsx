@@ -1,7 +1,9 @@
 "use strict";
 
 var React = require('react');
-var ScrollContainer = require('./Scroll/ScrollContainer.jsx');
+var BarChart = require('./BarChart.jsx');
 
-React.render( <ScrollContainer/>, $('#container')[0]);
-
+React.render( <BarChart
+              width={600}
+              height={600}
+              />, $('#container')[0]);
